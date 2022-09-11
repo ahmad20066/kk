@@ -1,5 +1,5 @@
 const Section = require('../models/section');
-const objectSection = require('../models/section_object');
+const ObjectSection = require('../models/section_object');
 const catController = require('../controllers/category_controller');
 const section = require('../models/section');
 const Category = require('../models/category');
@@ -43,12 +43,15 @@ exports.getSectionById = (req, res, next) => {
     const sectionId = req.params.sectionId;
     Category.find({ section: sectionId }).then(categories => {
         Section.findById(sectionId).then(section => {
-            objectSection = new objectSection({
+            let objectSection = new ObjectSection({
                 title: section.title,
                 quote: section.quote,
                 icon: section.icon,
                 categories: categories
             })
+            res.status(200).json(
+                 objectSection
+            )
         })
     }).catch(err => {
             if (!err.statusCode) {
