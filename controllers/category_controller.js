@@ -8,16 +8,26 @@ exports.getCategories = (req, res, next) => {
         });
     });
 }
-exports.createCategory = (title,section) => {
-    
-    
+exports.addCategory = (req, res, next) => {
+    const title = req.body.title;
+    const section = req.body.section;
     const addedCategory = new Category({
         title: title,
-        section: section,
-        
+        section: section
     });
-    return addedCategory.save()
+    addedCategory.save().then(result => {
+        res.status(200).json({
+            message: "Category Added Successfully",
+            category: addedCategory
+        });
+    }).catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
 }
+
 exports.getCategoryById = (req, res, next) => {
     const catId = req.params.catId;
     Category.findById(catId).then(category => {
