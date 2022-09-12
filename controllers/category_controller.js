@@ -28,23 +28,20 @@ exports.addCategory = (req, res, next) => {
     });
 }
 
-exports.getCategoryById = (req, res, next) => {
-    const catId = req.params.catId;
-    Category.findById(catId).then(category => {
-        res.status(200).json({
-            category: category
-        });
+
+exports.getCategoriesBySection = (req, res, next) => {
+    const section = req.params.section;
+    Category.find({ section: section }).then(categories => {
+        res.status(200).json(categories);
     }).catch(err => {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
         next(err);
-    }
-    )
+    });
 }
-exports.getCategoriesBySection = (section) =>
 
-    Category.find({ section: section })
+    
 //add categories to section
 // exports.addCategories = (categories, sectionId) => {
 //     console.log('3');
