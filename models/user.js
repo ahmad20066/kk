@@ -13,9 +13,9 @@ const userSchema = Schema({
         type : Date,
         default : Date.now()
     },
-    email : {
+    number : {
         type : String,
-        required : true,
+        required : true
     },
     password : {
         type  :String,

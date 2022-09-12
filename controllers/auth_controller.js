@@ -2,13 +2,13 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 exports.singUp = (req,res,next) => {
-    const email = req.body.email;
+    const number = req.body.number;
     const name = req.body.name;
     const password = req.body.password;
     let addedUser;
     bcrypt.hash(password,12).then(hashedPassword => { 
          addedUser = new User({
-            email : email,
+            number : number,
             password : hashedPassword,
             name : name,
         })
@@ -26,10 +26,10 @@ exports.singUp = (req,res,next) => {
     })
 }
 exports.logIn = (req,res,next) => {
-    const email = req.body.email;
+    const number = req.body.number;
     const password = req.body.password;
     let loadedUser;
-    User.findOne({email : email}).then(user => {
+    User.findOne({number : number}).then(user => {
         if(!user){
             const error = new Error('User Not Found');
             error.statusCode = 422;
