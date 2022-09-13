@@ -10,11 +10,12 @@ router.get('/products/:prodId', controller.getProductById);
 //shop/products/:section/:category
 
 router.get('/products/section/:section', controller.getProductsBySection);
-router.get('/products/:filter', controller.getProductsByFilter);
+
 //products/admin/update/:prodId
 router.put('/products/admin/update/:prodId', controller.editUserProducts);
 router.delete('/products/delete/:prodId', controller.deleteProduct);
 router.get('/products/user/:userId', controller.getUserProducts);
+router.get('/products/category/:category', controller.getProductsByCategory);
 //get products by filters
 
 

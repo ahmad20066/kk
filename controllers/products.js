@@ -146,14 +146,7 @@ exports.getProductsBySearch = (req,res,next) => {
     );
 }
 //apply filters to the products
-exports.getProductsByFilter = (req,res,next) => {
-    const filter = req.params.filter;
-    Product = Product.find({filter : filter}).then(products => {
-        res.status(200).json({
-             products
-        })
-    });
-}
+
 exports.getProductsByCategory = (req,res,next) => {
     const category = req.params.category;
     Product.find({category : category}).then(products => {
