@@ -33,7 +33,7 @@ function uploadImage(base46String) {
         const base64Data = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAZABkAAD/4Q3zaHR0cDovL25zLmFkb2JlLmN...';
 
         const imageBuffer = decodeBase64Image(base46String);
-        
+        const userUploadedFeedMessagesLocation = 'images/';
 
         const uniqueRandomImageName = 'image-' + uniqueSHA1String;
         // This variable is actually an array which has 5 values,
@@ -42,7 +42,7 @@ function uploadImage(base46String) {
             .type
             .match(imageTypeRegularExpression);
 
-        const userUploadedImagePath = 
+        const userUploadedImagePath = userUploadedFeedMessagesLocation +
             uniqueRandomImageName +
             '.' +
             imageTypeDetected[1];
