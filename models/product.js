@@ -11,10 +11,9 @@ const productSchema = Schema({
         required: true
     },
 
-    imageUrl: {
+    imageUrls: [{
         type: String,
-
-    },
+    }],
     createdAt: {
         type: Date,
         default: Date.now
@@ -51,13 +50,13 @@ const productSchema = Schema({
         type: Number,
         default: 0
     },
-    custom : {
-        type : Schema.Types.ObjectId,
-        ref : 'CustomProduct'
+    custom: {
+        type: Schema.Types.ObjectId,
+        ref: 'CustomProduct'
     },
-    filter : {
-        type : String,
-        default : ""
+    filter: {
+        type: String,
+        default: ""
     }
 });
 const Product = mongoose.model('Product', productSchema);

@@ -7,19 +7,22 @@ exports.saveProduct = (req, res, next) => {
     const description = req.body.description;
     const category = req.body.category;
     
-    const image = req.body.image;
-    const imageUrl = base(image);
+    const images= req.body.images;
+    let imageUrls = [];
+    for(let i = 0; i < images.length; i++){
+        imageUrls.push(base(images[i]));
+    }
     const price = req.body.price;
     const rating = req.body.rating;
     const custom  = req.body.custom;
     const section = req.body.section;
     
-    console.log(imageUrl);
+    console.log(imageUrls);
 
     const addedProduct = new Product({
         title: title,
         description: description,
-        imageUrl: imageUrl,
+        imageUrls: imageUrls,
         category: category,
         price : price,
         rating : rating,
