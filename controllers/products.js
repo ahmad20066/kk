@@ -1,22 +1,24 @@
 const Product = require('../models/product');
 const fs = require("fs");
 const base = require('../helpers/base46_helper');
+const Review = require('../models/review');
+const ProductObject = require('../models/product');
 exports.saveProduct = (req, res, next) => {
 
     const title = req.body.title;
     const description = req.body.description;
     const category = req.body.category;
-    
-    const images= req.body.images;
+
+    const images = req.body.images;
     let imageUrls = [];
-    for(let i = 0; i < images.length; i++){
+    for (let i = 0; i < images.length; i++) {
         imageUrls.push(base(images[i]));
     }
     const price = req.body.price;
     const rating = req.body.rating;
-    const custom  = req.body.custom;
+    const custom = req.body.custom;
     const section = req.body.section;
-    
+
     console.log(imageUrls);
 
     const addedProduct = new Product({
@@ -24,10 +26,10 @@ exports.saveProduct = (req, res, next) => {
         description: description,
         imageUrls: imageUrls,
         category: category,
-        price : price,
-        rating : rating,
-        custom : custom,
-        section : section,
+        price: price,
+        rating: rating,
+        custom: custom,
+        section: section,
     });
     addedProduct.save().then(result => {
         res.status(201).json({
@@ -44,21 +46,26 @@ exports.getProducts = (req, res, next) => {
 }
 exports.getProductById = (req, res, next) => {
     const prodId = req.params.prodId;
-    Product.findById(prodId).then(product => {
-        res.status(201).json({
-            product: product
+    Review.find({ product: prodId }).then(reviews => {
+        Product.findById(prodId).then(product => {
+            res.status(201).json({
+                product: new ProductObject({
+                    reviews : reviews,
+                    product : product
+                })
+            })
         })
     }).catch(err => {
-        if (!err.statusCode) {
-            err.statusCode = 500;
-        }
-        next(err);
-    });
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
 }
 exports.getProductsBySection = (req, res, next) => {
     const section = req.params.section;
-    
-    Product.find({ section : section}).then(
+
+    Product.find({ section: section }).then(
         products => {
             res.status(200).json({
                 products: products
@@ -88,7 +95,7 @@ exports.deleteProduct = (req, res, next) => {
         });
     })
 }
-exports.editUserProducts =  (req, res, next) => {
+exports.editUserProducts = (req, res, next) => {
     const id = req.params.prodId;
     const newTitle = req.body.title;
     const newDescription = req.body.description;
@@ -112,33 +119,33 @@ exports.editUserProducts =  (req, res, next) => {
         next(err);
     })
 }
-exports.getPopularProducts = (req,res,next) => {
-    Product.find({rating : {$gte : 3}}).then(products => {
+exports.getPopularProducts = (req, res, next) => {
+    Product.find({ rating: { $gte: 3 } }).then(products => {
         res.status(200).json({
-            products : products
+            products: products
         });
     }).catch(err => {
-        if(!err.statusCode){
+        if (!err.statusCode) {
             err.statusCode = 500
         }
         next(err);
     });
 }
-exports.getNewProducts = (req,res,next) => {
-    Product.find({createdAt : {$gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000) }}).then(products => {
+exports.getNewProducts = (req, res, next) => {
+    Product.find({ createdAt: { $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000) } }).then(products => {
         res.status(200).json({
-            products : products
+            products: products
         })
     });
 }
-exports.getProductsBySearch = (req,res,next) => {
+exports.getProductsBySearch = (req, res, next) => {
     const search = req.params.search;
-    Product.find({title : {$regex : search}}).then(products => {
+    Product.find({ title: { $regex: search } }).then(products => {
         res.status(200).json({
-            products : products
+            products: products
         })
     }).catch(err => {
-        if(!err.statusCode){
+        if (!err.statusCode) {
             err.statusCode = 500
         }
         next(err);
@@ -147,14 +154,14 @@ exports.getProductsBySearch = (req,res,next) => {
 }
 //apply filters to the products
 
-exports.getProductsByCategory = (req,res,next) => {
+exports.getProductsByCategory = (req, res, next) => {
     const category = req.params.category;
-    Product.find({category : category}).then(products => {
+    Product.find({ category: category }).then(products => {
         res.status(200).json({
-            products : products
+            products: products
         })
     }).catch(err => {
-        if(!err.statusCode){
+        if (!err.statusCode) {
             err.statusCode = 500
         }
         next(err);
@@ -162,7 +169,7 @@ exports.getProductsByCategory = (req,res,next) => {
     );
 }
 //update products
-exports.updateProduct = (req,res,next) => {
+exports.updateProduct = (req, res, next) => {
     const id = req.params.prodId;
     const newTitle = req.body.title;
     const newDescription = req.body.description;
@@ -186,7 +193,7 @@ exports.updateProduct = (req,res,next) => {
     })
 }
 
-    
+
 
 
 
