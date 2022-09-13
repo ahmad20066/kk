@@ -12,7 +12,7 @@ const sectionRouter = require('./routes/section');
 const adminRouter = require('./routes/admin');
 app.use(bodyParser.json({limit : '50mb'}));
 
-app.use(express.static('images'));
+app.use('/images',express.static('images'));
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
