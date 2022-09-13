@@ -10,6 +10,7 @@ const categoryRouter = require('./routes/categroy')
 const homeRouter = require('./routes/home')
 const sectionRouter = require('./routes/section');
 const adminRouter = require('./routes/admin');
+const reviewsRouter = require('./routes/reviews');
 app.use(bodyParser.json({limit : '50mb'}));
 
 app.use('/images',express.static('images'));
@@ -30,6 +31,7 @@ app.use('/categories',categoryRouter);
 app.use('/home',homeRouter);
 app.use('/sections',sectionRouter);
 app.use('/admin',adminRouter);
+app.use('/reviews',reviewsRouter);
 
 app.use((error,req,res,next) => {
     console.log(error);
