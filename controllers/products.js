@@ -2,7 +2,7 @@ const Product = require('../models/product');
 const fs = require("fs");
 const base = require('../helpers/base46_helper');
 const Review = require('../models/review');
-const ProductObject = require('../models/product');
+const ProductObject = require('../models/product_object');
 exports.saveProduct = (req, res, next) => {
 
     const title = req.body.title;
@@ -46,16 +46,30 @@ exports.getProducts = (req, res, next) => {
 }
 exports.getProductById = (req, res, next) => {
     const prodId = req.params.prodId;
-    Review.find({ product: prodId }).then(reviews => {
-        Product.findById(prodId).then(product => {
+    Review.find({product: prodId }).then(reviews => {
+        console.log('1');
+        return Product.findById(prodId).then(product => {
+            console.log(reviews);
             res.status(201).json({
                 product: new ProductObject({
-                    reviews : reviews,
-                    product : product
+                    reviews: reviews,
+                    title: product.title,
+                    description: product.description,
+                    imageUrls: product.imageUrls,
+                    category: product.category,
+                    price: product.price,
+                    rating: product.rating,
+                    custom: product.custom,
+                    section: product.section,
+                    
                 })
+                
             })
+            
         })
-    }).catch(err => {
+        
+    })
+        .catch(err => {
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
