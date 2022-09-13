@@ -8,8 +8,8 @@ router.get('/products', controller.getProducts);
 //shop/products/:prodId
 router.get('/products/:prodId', controller.getProductById);
 //shop/products/:section/:category
-router.get('/products/:section/:category', controller.getProductsBySection);
-router.get('/products/:section', controller.getProductsBySection);
+
+router.get('/products/section/:section', controller.getProductsBySection);
 router.get('/products/:filter', controller.getProductsByFilter);
 //products/admin/update/:prodId
 router.put('/products/admin/update/:prodId', controller.editUserProducts);

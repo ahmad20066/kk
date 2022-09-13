@@ -51,10 +51,6 @@ const productSchema = Schema({
         type: Number,
         default: 0
     },
-    quantity: {
-        type: Number,
-        default: 0
-    },
     custom : {
         type : Schema.Types.ObjectId,
         ref : 'CustomProduct'

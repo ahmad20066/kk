@@ -12,6 +12,7 @@ exports.saveProduct = (req, res, next) => {
     const price = req.body.price;
     const rating = req.body.rating;
     const custom  = req.body.custom;
+    const section = req.body.section;
     
     console.log(imageUrl);
 
@@ -23,6 +24,7 @@ exports.saveProduct = (req, res, next) => {
         price : price,
         rating : rating,
         custom : custom,
+        section : section,
     });
     addedProduct.save().then(result => {
         res.status(201).json({
@@ -52,8 +54,8 @@ exports.getProductById = (req, res, next) => {
 }
 exports.getProductsBySection = (req, res, next) => {
     const section = req.params.section;
-    const category = req.params.category || "";
-    Product.find({ section : section,category : category }).then(
+    
+    Product.find({ section : section}).then(
         products => {
             res.status(200).json({
                 products: products

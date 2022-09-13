@@ -14,9 +14,11 @@ exports.singUp = (req,res,next) => {
         })
         return addedUser.save()
     }).then(result => {
+        const token = jwt.sign({userId : addedUser._id},"secretahmad");
         res.status(200).json({
             Message : "Signed Up Successfully",
-            user : addedUser
+            user : addedUser,
+            jwt : token
         })
     }).catch(err => {
         if(!err.statusCode){
