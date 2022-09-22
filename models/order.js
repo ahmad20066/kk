@@ -26,13 +26,21 @@ const orderSchema = new Schema({
     status: {
         type: String,
         required: true,
-        default: 'pending'
+        default: 'pending',
+        enum : ['pending','accepted','rejected','delivered','paid','canceled']
+            
     },
     address: {
         type : Schema.Types.ObjectId,
         ref : 'Address',
         required : true
-    }
+    },
+    shippingPrice : {
+        type : Number,
+        required : true
+    },
+    
+
 
     
 

@@ -2,7 +2,7 @@ const Cart = require('../models/cart');
 const User = require('../models/user');
 exports.GetCart = (req, res, next) => {
     const user = req.params.user;
-    Cart.findOne({ user: user }).then(cart => {
+    Cart.findOne({ user: user }).populate({path : 'products',populate : {path : 'product',model : 'Product'}}).then(cart => {
         res.status(200).json({
             cart: cart
         })

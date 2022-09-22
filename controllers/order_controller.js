@@ -1,16 +1,20 @@
 const Order = require('../models/order');
+const Cart = require('../models/cart');
 
 
-exports.placeOrder = (req,res,next) => {
+exports.placeOrder = async(req,res,next) => {
     const user = req.body.user;
-    const products = req.body.products;
+    
     const total = req.body.total;
     const address = req.body.address;
+    const shippingPrice = req.body.shippingPrice;
+    const cart = await Cart.findOne({user : user});
     const order = new Order({
         user : user,
-        products : products,
+        products : cart.products,
         total : total,
-        address : address
+        address : address,
+        shippingPrice : shippingPrice
     });
     order.save().then(result => {
         res.status(201).json({
