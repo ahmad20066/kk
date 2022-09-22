@@ -84,11 +84,45 @@ exports.RemoveFromCart = (req, res, next) => {
 exports.RemoveAllFromCart = (req, res, next) => {
     const user = req.params.user;
     Cart.findOne({ user: user }).then(cart => {
-        cart.products = [];
-        return cart.save();
+        
+        return cart.remove();
     }).then(result => {
         res.status(200).json({
             message: "Cart cleared",
+            cart: result
+        })
+    }).catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    })
+}
+
+
+        
+//remove quantity
+
+exports.removeQuantity = (req,res,next) => {
+    const user = req.body.user;
+    const product = req.body.product;
+    let fetchedCart;
+    Cart.findOne({ user: user }).then(cart => {
+        fetchedCart = cart;
+        const productIndex = cart.products.findIndex(p => {
+            return p.product.toString() === product.toString();
+        })
+        if (productIndex >= 0) {
+            const updatedProduct = { ...cart.products[productIndex] };
+            updatedProduct.quantity = updatedProduct.quantity - 1;
+            const updatedProducts = [...cart.products];
+            updatedProducts[productIndex] = updatedProduct;
+            cart.products = updatedProducts;
+            return cart.save();
+        } 
+    }).then(result => {
+        res.status(200).json({
+            message: "Product quantity removed",
             cart: result
         })
     }).catch(err => {

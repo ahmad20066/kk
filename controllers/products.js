@@ -35,7 +35,7 @@ exports.saveProduct = (req, res, next) => {
     addedProduct.save().then(result => {
         res.status(201).json({
             Message: "Product Added Successfully",
-            product: addedProduct,
+            product: result,
         });
     })
 

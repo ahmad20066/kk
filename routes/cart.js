@@ -6,4 +6,6 @@ router.post('/', controller.AddToCart);
 router.delete('/', controller.RemoveFromCart);
 //clear cart
 router.delete('/:user', controller.RemoveAllFromCart);
+
+router.put('/remove',controller.removeQuantity);
 module.exports = router;
