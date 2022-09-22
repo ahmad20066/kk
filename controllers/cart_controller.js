@@ -30,9 +30,13 @@ exports.AddToCart = (req, res, next) => {
         const productIndex = cart.products.findIndex(p => {
             return p.product.toString() === product.toString();
         })
+        
         if (productIndex >= 0) {
-            const updatedProduct = { ...cart.products[productIndex] };
+            console.log(cart.products[productIndex]);
+            
+            const updatedProduct = cart.products[productIndex];
             updatedProduct.quantity = updatedProduct.quantity + quantity;
+            console.log(updatedProduct);
             const updatedProducts = [...cart.products];
             updatedProducts[productIndex] = updatedProduct;
             cart.products = updatedProducts;
