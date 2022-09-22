@@ -17,29 +17,14 @@ const userSchema = Schema({
         type : String,
         required : true
     },
-    password : {
-        type  :String,
-        required : true,
-    },
+    
     role : {
-        type : Number,
+        type : String,
         default : Role.Default
     },
-    orders : [
-        {
-            type : Schema.Types.ObjectId,
-            ref : "Order"
-        }
-    ],
-    products : [
-        {
-            type : Schema.Types.ObjectId,
-            ref : 'Product'
-        }],
-    isAdmin : {
-        type : Boolean,
-        default : false
-    }
+    phoneOtp : {
+        type : String,
+    },
         
 
 });

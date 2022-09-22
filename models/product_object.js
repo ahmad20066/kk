@@ -58,6 +58,9 @@ const productObjectSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'CustomProduct'
     },
+    status : {
+        type : String,
+    },
     filter: {
         type: String,
         default: ""

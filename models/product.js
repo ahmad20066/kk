@@ -57,7 +57,11 @@ const productSchema = Schema({
     filter: {
         type: String,
         default: ""
-    }
+    },
+    status: {
+        type: String,
+        default: "pending"
+    },
 });
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;

@@ -1,24 +1,21 @@
 const Order = require('../models/order');
-exports.getOrders = (req,res,next) => {
-    Order.find().then(orders => {
-        res.status(201).json({
-            orders : orders,
-        })
-    })
-}
+
 
 exports.placeOrder = (req,res,next) => {
-    const date = req.body.date;
+    const user = req.body.user;
     const products = req.body.products;
-    const addedOrder = new Order({
-        date : date,
-        products : products
+    const total = req.body.total;
+    const address = req.body.address;
+    const order = new Order({
+        user : user,
+        products : products,
+        total : total,
+        address : address
     });
-    addedOrder.save().then(result => {
+    order.save().then(result => {
         res.status(201).json({
-            Message : "Order added Successfully",
-            order : addedOrder
-            
+            message : "Order Placed",
+            order : result
         })
     }).catch(err => {
         if(!err.statusCode){
@@ -53,3 +50,18 @@ exports.deleteOrder = (req,res,next) => {
         next(err);
     })
 }
+exports.getOrders = (req,res,next) => {
+    const user = req.params.user;
+    Order.find({user : user}).populate('address').populate({path : 'products',populate : {path : 'product',model : 'Product'}}).then(orders => {
+        res.status(201).json({
+            orders : orders
+        })
+    }).catch(err => {
+        if(!err.statusCode){
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+    )
+}
+

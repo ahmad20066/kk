@@ -10,6 +10,7 @@ exports.saveProduct = (req, res, next) => {
     const category = req.body.category;
 
     const images = req.body.images;
+
     let imageUrls = [];
     for (let i = 0; i < images.length; i++) {
         imageUrls.push(base(images[i]));
@@ -46,7 +47,7 @@ exports.getProducts = (req, res, next) => {
 }
 exports.getProductById = (req, res, next) => {
     const prodId = req.params.prodId;
-    Review.find({product: prodId }).then(reviews => {
+    Review.find({ product: prodId }).populate('user').then(reviews => {
         console.log('1');
         return Product.findById(prodId).then(product => {
             console.log(reviews);
@@ -61,13 +62,14 @@ exports.getProductById = (req, res, next) => {
                     rating: product.rating,
                     custom: product.custom,
                     section: product.section,
-                    
+                    status : product.status,
+
                 })
-                
+
             })
-            
+
         })
-        
+
     })
         .catch(err => {
             if (!err.statusCode) {
@@ -79,7 +81,7 @@ exports.getProductById = (req, res, next) => {
 exports.getProductsBySection = (req, res, next) => {
     const section = req.params.section;
 
-    Product.find({ section: section }).then(
+    Product.find({ section: section, status: 'accepted' }).then(
         products => {
             res.status(200).json({
                 products: products
@@ -134,7 +136,7 @@ exports.editUserProducts = (req, res, next) => {
     })
 }
 exports.getPopularProducts = (req, res, next) => {
-    Product.find({ rating: { $gte: 3 } }).then(products => {
+    Product.find({ rating: { $gte: 3 }, }).then(products => {
         res.status(200).json({
             products: products
         });
@@ -146,7 +148,7 @@ exports.getPopularProducts = (req, res, next) => {
     });
 }
 exports.getNewProducts = (req, res, next) => {
-    Product.find({ createdAt: { $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000) } }).then(products => {
+    Product.find({ createdAt: { $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000) }, status: 'accepted' }).then(products => {
         res.status(200).json({
             products: products
         })
@@ -170,7 +172,7 @@ exports.getProductsBySearch = (req, res, next) => {
 
 exports.getProductsByCategory = (req, res, next) => {
     const category = req.params.category;
-    Product.find({ category: category }).then(products => {
+    Product.find({ category: category, status: 'accepted' }).then(products => {
         res.status(200).json({
             products: products
         })

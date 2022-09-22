@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/admin_controller.js');
-const isAdmin = require('../middlewares/is_admin')
-router.post("/add/:userId",isAdmin,controller.makeAdmin);
-router.put("/Normal/:userId",isAdmin,controller.makeNormal);
-router.delete("/removeAdmin/:userId",isAdmin,controller.removeAdmin);
-router.put("/Seller/:userId",isAdmin,controller.makeSeller);
+
+router.put("/Normal/:userId", controller.makeNormal);
+router.put("/Seller/:userId", controller.makeSeller);
+router.post('/changeOrderStatus/:orderId/:status', controller.changeOrderStatus);
+
+router.post('/changeProductStatus/:productId/:status', controller.ChangeProductStatus);
+
 module.exports = router;
