@@ -117,8 +117,9 @@ exports.removeQuantity = (req,res,next) => {
             return p.product.toString() === product.toString();
         })
         if (productIndex >= 0) {
-            const updatedProduct = { ...cart.products[productIndex] };
+            const updatedProduct = cart.products[productIndex];
             updatedProduct.quantity = updatedProduct.quantity - 1;
+            console.log(updatedProduct);
             const updatedProducts = [...cart.products];
             updatedProducts[productIndex] = updatedProduct;
             cart.products = updatedProducts;
