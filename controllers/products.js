@@ -50,22 +50,10 @@ exports.getProductById = (req, res, next) => {
     Review.find({ product: prodId }).populate('user').then(reviews => {
         console.log('1');
         return Product.findById(prodId).then(product => {
+            product.reviews = reviews;
             console.log(reviews);
             res.status(201).json({
-                product: new ProductObject({
-                    reviews: reviews,
-                    title: product.title,
-                    description: product.description,
-                    imageUrls: product.imageUrls,
-                    category: product.category,
-                    price: product.price,
-                    rating: product.rating,
-                    custom: product.custom,
-                    section: product.section,
-                    status : product.status,
-
-                })
-
+                product: product
             })
 
         })

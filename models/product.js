@@ -62,6 +62,11 @@ const productSchema = Schema({
         type: String,
         default: "pending"
     },
+    reviews : [{
+        type : Schema.Types.ObjectId,
+        ref : 'Review',
+    }],
+     
 });
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;
