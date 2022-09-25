@@ -27,7 +27,7 @@ const orderSchema = new Schema({
         type: String,
         required: true,
         default: 'pending',
-        enum : ['pending','accepted','rejected','delivered','paid','canceled']
+        enum : ['pending','accepted','rejected','delivered','paid','cancelled']
             
     },
     address: {
@@ -39,12 +39,6 @@ const orderSchema = new Schema({
         type : Number,
         required : true
     },
-    
-
-
-    
-
-
 });
 const Order = mongoose.model('Order', orderSchema);
 module.exports = Order;

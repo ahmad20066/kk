@@ -4,7 +4,6 @@ const Cart = require('../models/cart');
 
 exports.placeOrder = async(req,res,next) => {
     const user = req.body.user;
-    
     const total = req.body.total;
     const address = req.body.address;
     const shippingPrice = req.body.shippingPrice;
@@ -16,7 +15,9 @@ exports.placeOrder = async(req,res,next) => {
         address : address,
         shippingPrice : shippingPrice
     });
-    order.save().then(result => {
+    
+    order.save().then(async result => {
+        await cart.remove();
         res.status(201).json({
             message : "Order Placed",
             order : result
@@ -67,5 +68,28 @@ exports.getOrders = (req,res,next) => {
         next(err);
     }
     )
+}
+exports.getShippingPrice = (req,res,next) => {
+}
+exports.cancelOrder = (req,res,next) => {
+    const orderId = req.params.orderId;
+    Order.findById(orderId).then(order => {
+        order.status = "cancelled";
+        order.save().then(result => {
+            res.status(201).json({
+                order : result
+            })
+        }).catch(err => {
+            if(!err.statusCode){
+                err.statusCode = 500;
+            }
+            next(err);
+        })
+    }).catch(err => {
+        if(!err.statusCode){
+            err.statusCode = 500;
+        }
+        next(err);
+    })
 }
 

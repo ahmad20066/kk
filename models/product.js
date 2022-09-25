@@ -60,7 +60,8 @@ const productSchema = Schema({
     },
     status: {
         type: String,
-        default: "pending"
+        default: "pending",
+        enum : ['pending','accepted','rejected']
     },
     reviews : [{
         type : Schema.Types.ObjectId,
