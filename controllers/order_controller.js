@@ -1,5 +1,7 @@
 const Order = require('../models/order');
 const Cart = require('../models/cart');
+const address = require('../models/address');
+const Address = require('../models/address');
 
 
 exports.placeOrder = async(req,res,next) => {
@@ -57,6 +59,7 @@ exports.deleteOrder = (req,res,next) => {
 }
 exports.getOrders = (req,res,next) => {
     const user = req.params.user;
+    
     Order.find({user : user}).populate('address').populate({path : 'products',populate : {path : 'product',model : 'Product'}}).then(orders => {
         res.status(201).json({
             orders : orders

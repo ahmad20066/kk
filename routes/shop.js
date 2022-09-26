@@ -16,6 +16,7 @@ router.put('/products/update/:prodId', controller.editUserProducts);
 router.delete('/products/:prodId', controller.deleteProduct);
 router.get('/products/user/:userId', controller.getUserProducts);
 router.get('/products/category/:category', controller.getProductsByCategory);
+router.get('/products/search/:search', controller.getProductsBySearch);
 //get products by filters
 
 
