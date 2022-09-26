@@ -3,6 +3,7 @@ const fs = require("fs");
 const base = require('../helpers/base46_helper');
 const Review = require('../models/review');
 const ProductObject = require('../models/product_object');
+const CustomProduct = require('../models/custom_product');
 exports.saveProduct = (req, res, next) => {
 
     const title = req.body.title;
@@ -19,6 +20,7 @@ exports.saveProduct = (req, res, next) => {
     const rating = req.body.rating;
     const custom = req.body.custom;
     const section = req.body.section;
+    const parentProduct = req.body.parentProduct;
 
     console.log(imageUrls);
 
@@ -31,6 +33,7 @@ exports.saveProduct = (req, res, next) => {
         rating: rating,
         custom: custom,
         section: section,
+        parentProduct: parentProduct,
     });
     addedProduct.save().then(result => {
         res.status(201).json({
@@ -49,8 +52,13 @@ exports.getProductById = (req, res, next) => {
     const prodId = req.params.prodId;
     Review.find({ product: prodId }).populate('user').then(reviews => {
         console.log('1');
-        return Product.findById(prodId).then(product => {
+        return Product.findById(prodId).then(async product => {
             product.reviews = reviews;
+            const relatedProducts = await Product.find({ parentProduct: prodId });
+            product.custom = new CustomProduct({
+                products : relatedProducts,
+                chosenProducts : []
+            });
             console.log(reviews);
             res.status(201).json({
                 product: product

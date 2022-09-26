@@ -50,10 +50,6 @@ const productSchema = Schema({
         type: Number,
         default: 0
     },
-    custom: {
-        type: Schema.Types.ObjectId,
-        ref: 'CustomProduct'
-    },
     filter: {
         type: String,
         default: ""
@@ -67,6 +63,18 @@ const productSchema = Schema({
         type : Schema.Types.ObjectId,
         ref : 'Review',
     }],
+    parentProduct : {
+        type : Schema.Types.ObjectId,
+        ref : 'Product',
+    },
+    specificNote : {
+        type : String,
+    },
+    custom : {
+        type : Schema.Types.ObjectId,
+        ref : 'CustomProduct',
+    },
+
      
 });
 const Product = mongoose.model('Product', productSchema);
