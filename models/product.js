@@ -67,9 +67,11 @@ const productSchema = Schema({
         type : Schema.Types.ObjectId,
         ref : 'Product',
     },
-    specificNote : {
+    specificQuestion : {
         type : String,
+
     },
+    
     custom : {
         type : Schema.Types.ObjectId,
         ref : 'CustomProduct',

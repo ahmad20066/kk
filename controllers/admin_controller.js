@@ -31,12 +31,14 @@ exports.makeSeller = (req,res,next) => {
 exports.changeOrderStatus = (req,res,next) => {
     const orderId = req.params.orderId;
     const status = req.params.status;
+    const reason = req.body.reason;
     Order.findById(orderId).then(order => {
         order.status = status;
         return order.save();
     }).then(result => {
         res.status(200).json({
             message : "Order " + status,
+            reason : reason,
         });
     })
 }
@@ -44,12 +46,14 @@ exports.changeOrderStatus = (req,res,next) => {
 exports.ChangeProductStatus = (req,res,next) => {
     const productId = req.params.productId;
     const status = req.params.status;
+    const reason = req.body.reason;
     Product.findById(productId).then(product => {
         product.status = status
         return product.save();
     }).then(result => {
         res.status(200).json({
             message : "Product " + status,
+            reason : reason,
         });
     })
 }

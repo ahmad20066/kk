@@ -17,6 +17,9 @@ const cartSchema = new Schema({
             type: Number,
             required: true,
             default: 0
+        },
+        specificNote : {
+            type : String,
         }
     }]
 });

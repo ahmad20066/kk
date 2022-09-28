@@ -17,12 +17,13 @@ exports.AddToCart = (req, res, next) => {
     const user = req.body.user;
     const product = req.body.product;
     const quantity = req.body.quantity;
+    const specificNote = req.body.specificNote;
     let fetchedCart;
     Cart.findOne({ user: user }).then(cart => {
         if (!cart) {
             const newCart = new Cart({
                 user: user,
-                products: [{ product: product, quantity: quantity }]
+                products: [{ product: product, quantity: quantity,specificNote : specificNote }]
             })
             return newCart.save();
         }

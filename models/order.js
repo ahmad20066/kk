@@ -16,6 +16,9 @@ const orderSchema = new Schema({
             quantity: {
                 type: Number,
                 required: true
+            },
+            specificNote: {
+                type: String,
             }
         }
     ],

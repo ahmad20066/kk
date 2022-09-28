@@ -10,6 +10,7 @@ exports.placeOrder = async(req,res,next) => {
     const address = req.body.address;
     const shippingPrice = req.body.shippingPrice;
     const cart = await Cart.findOne({user : user});
+    console.log(cart.products);
     const order = new Order({
         user : user,
         products : cart.products,

@@ -21,6 +21,7 @@ exports.saveProduct = (req, res, next) => {
     const custom = req.body.custom;
     const section = req.body.section;
     const parentProduct = req.body.parentProduct;
+    const specificQuestion =  req.body.specificQuestion;
 
     console.log(imageUrls);
 
@@ -34,6 +35,7 @@ exports.saveProduct = (req, res, next) => {
         custom: custom,
         section: section,
         parentProduct: parentProduct,
+        specificQuestion: specificQuestion
     });
     addedProduct.save().then(result => {
         res.status(201).json({
