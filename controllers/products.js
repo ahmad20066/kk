@@ -154,7 +154,7 @@ exports.getNewProducts = (req, res, next) => {
 }
 exports.getProductsBySearch = (req, res, next) => {
     const search = req.params.search;
-    Product.find({ title: { $regex: search } }).then(products => {
+    Product.find({ title: { $regex: search },status : accepted }).then(products => {
         res.status(200).json({
             products: products
         })
